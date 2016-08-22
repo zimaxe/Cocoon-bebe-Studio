@@ -5,6 +5,6 @@
 * Choix de la maternité
 * Choix de la date de rendez-vous
 * Choix du créneau horaire
-* formulaire d'inscription (Nom, coordonnées, contact, détails bébé)
+* Formulaire d'inscription (Nom, coordonnées, contact, détails bébé)
 
 
