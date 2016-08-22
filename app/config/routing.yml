@@ -1,3 +1,16 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+ae_booking:
+    resource: "@AEBookingBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# Authentification
+
+login:
+    path: /login
+    defaults:
+        _controller: AEUserBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
