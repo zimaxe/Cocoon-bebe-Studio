@@ -13,15 +13,15 @@
         {% endif %}
 
         {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('admin_login_check') }}" method="post">
             <div class="form-group">
                 <label for="username">Login :</label>
                 <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" />
             </div>
 
             <div class="form-group">
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="_password" class="form-control" />
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="_password" class="form-control" />
             </div>
 
             <input type="hidden" name="_csrf_token"

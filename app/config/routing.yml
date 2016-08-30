@@ -1,8 +1,19 @@
+ae_back_office:
+    resource: "@AEBackOfficeBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 ae_booking:
     resource: "@AEBookingBundle/Resources/config/routing.yml"
     prefix:   /
 
 # Authentification
+admin_login:
+    path: /admin/login
+    defaults:
+        _controller: AEBackOfficeBundle:User:login
+
+admin_login_check:
+    path: /admin/login_check
 
 login:
     path: /login
@@ -14,3 +25,8 @@ login_check:
 
 logout:
     path: /logout
+
+register:
+    path: /register
+    defaults:
+        _controller: AEUserBundle:Security:register

@@ -12,13 +12,22 @@ use AE\UserBundle\Form\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UserAddType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->remove('plainPassword')
+            ->add('plainPassword', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options' => array('label' => 'Mot de passe', 'attr' => array('class' => 'form-control')),
+                'second_options' => array('label' => 'Confirmer le mot de passe', 'attr' => array('class' => 'form-control')),
+                'required' => false
+            ))
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'Client' => 'ROLE_USER',

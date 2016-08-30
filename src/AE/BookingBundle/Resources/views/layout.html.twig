@@ -29,16 +29,17 @@
                 </div>
             {% endfor %}
 
-             {% block body %}
-             {% endblock %}
-{% block js %}
-    {% javascripts filter='?jsqueeze'
-    'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'
-    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
+            {% block body %}
+            {% endblock %}
+
+            {% javascripts filter='?jsqueeze'
+            'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'
+            'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            {% block js %}
+            {% endblock %}
 
 </body>
 </html>

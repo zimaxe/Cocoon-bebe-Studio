@@ -1,3 +1,9 @@
 ae_booking_homepage:
     path:     /
-    defaults: { _controller: AEBookingBundle:Default:index }
+    defaults: { _controller: AEBookingBundle:Customer:index }
+
+
+
+ae_booking_slots:
+    path:     /slots
+    defaults: { _controller: AEBookingBundle:Customer:getSlots}

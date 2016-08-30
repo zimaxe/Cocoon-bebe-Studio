@@ -5,7 +5,7 @@
  * Heure: 14:42
  */
 
-namespace AE\BackOfficeBundle;
+namespace AE\BackOfficeBundle\Form;
 
 
 use AE\UserBundle\Form\UserType;

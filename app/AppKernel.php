@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new AE\BookingBundle\AEBookingBundle(),
             new AE\UserBundle\AEUserBundle(),
+            new AE\BackOfficeBundle\AEBackOfficeBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

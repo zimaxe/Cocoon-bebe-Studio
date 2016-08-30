@@ -1,0 +1,22 @@
+
+ae_backoffice_customers:
+    path:     /customers
+    defaults: { _controller: AEBackOfficeBundle:User:customers }
+
+ae_backoffice_admins:
+    path:     /admins
+    defaults: { _controller: AEBackOfficeBundle:User:admins }
+
+ae_backoffice_add_user:
+    path:     /add
+    defaults: { _controller: AEBackOfficeBundle:User:add }
+
+ae_backoffice_edit_user:
+    path:     /edit/{id}
+    defaults: { _controller: AEBackOfficeBundle:User:edit }
+    requirements:
+      id: \d+
+
+ae_backoffice_delete_user:
+    path:     /delete
+    defaults: { _controller: AEBackOfficeBundle:User:delete }

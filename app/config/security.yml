@@ -28,7 +28,37 @@ security:
             provider: main
             form_login:
               login_path: login
+              use_forward: true
+              use_referer: true
               check_path: login_check
+              csrf_token_generator: security.csrf.token_manager
             logout:
               path: logout
-              target: /login
+              target: /
+        backoffice:
+            pattern:   ^/admin
+            anonymous: true
+            provider: main
+            form_login:
+              login_path: admin_login
+              use_forward: true
+              use_referer: true
+              check_path: admin_login_check
+              csrf_token_generator: security.csrf.token_manager
+            logout:
+              path: logout
+              target: /
+
+
+    access_control:
+        # back-office
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/mon-compte, roles: ROLE_USER }
+        # front-office
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profile, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/deconnexion$, role: IS_AUTHENTICATED_FULLY }

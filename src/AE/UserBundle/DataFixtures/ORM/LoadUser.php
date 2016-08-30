@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUser implements FixtureInterface, ContainerAwareInterface
+class LoadUser /**implements FixtureInterface, ContainerAwareInterface**/
 {
     private $container;
 
@@ -35,7 +35,6 @@ class LoadUser implements FixtureInterface, ContainerAwareInterface
         foreach($names as $key => $role) {
             $user = new User;
             //$password = $this->get('security.password_encoder')->encodePassword($user, '02dec78');
-            $user->setSalt(md5(uniqid()));
             $password =  $this->container->get('security.password_encoder')->encodePassword($user, '02dec78');
             $user->setEmail($key);
             $user->setPassword( $password );
