@@ -11,27 +11,40 @@ namespace AE\BookingBundle\Quota;
 use AE\BookingBundle\Entity\Quota;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Class QuotaCustomer
+ * @package AE\BookingBundle\Quota
+ */
 class QuotaCustomer
 {
     private $em;
     private $maxSlots;
 
-    public function __construct($maxSlots, EntityManager $manager )
+    /**
+     * QuotaCustomer constructor.
+     * @param $maxSlots
+     * @param EntityManager $manager
+     */
+    public function __construct($maxSlots, EntityManager $manager)
     {
         $this->em = $manager;
         $this->maxSlots = $maxSlots;
     }
 
-    public function decrementQuotas($orderDay){
+    /**
+     * @param $orderDay
+     */
+    public function decrementQuotas($orderDay)
+    {
 
         $quota = $this->em->getRepository('AEBookingBundle:Quota')->findOneBy(['quotaDay' => $orderDay]);
         $admins = $this->em->getRepository('AEUserBundle:User')->getAdmins();
         $totalQuota = ($admins * $this->maxSlots);
 
-        if($quota) {
+        if ($quota) {
             $newQuota = $quota->getQuotaNb() - 1;
             $quota->setQuotaNb($newQuota);
-        }else {
+        } else {
             $quota = new Quota();
             $quota->setQuotaDay($orderDay);
             $quotaNb = $totalQuota - 1;
