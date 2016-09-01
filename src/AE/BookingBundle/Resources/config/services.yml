@@ -1,4 +1,9 @@
 services:
-#    ae_booking.example:
-#        class: AE\BookingBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+
+  ae_booking.quota.quota_customer:
+    class: AE\BookingBundle\Quota\QuotaCustomer
+    arguments: ['%max_slot%','@doctrine.orm.entity_manager']
+
+  ae_booking.quota.quota_holiday:
+    class: AE\BookingBundle\Quota\QuotaHoliday
+    arguments: ['%max_slot%', '@doctrine.orm.entity_manager']

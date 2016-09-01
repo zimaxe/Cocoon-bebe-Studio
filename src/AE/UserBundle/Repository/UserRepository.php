@@ -10,4 +10,14 @@ namespace AE\UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAdmins()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->select('COUNT(u)')
+            ->where('u.roles LIKE :role')->setParameter('role', "%ROLE_ADMIN%");
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

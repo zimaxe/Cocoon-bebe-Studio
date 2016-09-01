@@ -1,22 +1,40 @@
-
+################### USER #######################################
 ae_backoffice_customers:
-    path:     /customers
+    path:     /user/customers
     defaults: { _controller: AEBackOfficeBundle:User:customers }
 
 ae_backoffice_admins:
-    path:     /admins
+    path:     /user/admins
     defaults: { _controller: AEBackOfficeBundle:User:admins }
 
 ae_backoffice_add_user:
-    path:     /add
+    path:     /user/add
     defaults: { _controller: AEBackOfficeBundle:User:add }
 
 ae_backoffice_edit_user:
-    path:     /edit/{id}
+    path:     user/edit/{id}
     defaults: { _controller: AEBackOfficeBundle:User:edit }
     requirements:
       id: \d+
 
 ae_backoffice_delete_user:
-    path:     /delete
+    path:     user/delete
     defaults: { _controller: AEBackOfficeBundle:User:delete }
+
+
+################### Holiday #################################
+ae_backoffice_holiday_index:
+    path:     /holidays/{userId}
+    defaults: { _controller: AEBackOfficeBundle:Holiday:index }
+
+ae_backoffice_holiday_add:
+    path:     /holidays/add
+    defaults: { _controller: AEBackOfficeBundle:Holiday:add }
+
+ae_backoffice_holiday_edit:
+    path:     /holidays/edit/{id}
+    defaults: { _controller: AEBackOfficeBundle:Holiday:edit }
+
+ae_backoffice_holiday_delete:
+    path:     /holidays/delete/{id}
+    defaults: { _controller: AEBackOfficeBundle:Holiday:delete }

@@ -109,7 +109,7 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=20)
+     * @ORM\Column(name="phone", type="string", length=20, nullable=true)
      */
     private $phone;
 
@@ -151,7 +151,7 @@ class Customer
     /**
      * @var int
      *
-     * @ORM\Column(name="maternity_id", type="integer")
+     * @ORM\Column(name="maternity_id", type="integer", nullable=true)
      */
     private $maternityId;
 
@@ -168,6 +168,7 @@ class Customer
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+    
 
 
 
@@ -175,6 +176,7 @@ class Customer
     {
         $this->validate = 1;
         $this->createdAt = new \DateTime();
+
     }
 
 
@@ -692,4 +694,5 @@ class Customer
     {
         return $this->createdAt;
     }
+    
 }

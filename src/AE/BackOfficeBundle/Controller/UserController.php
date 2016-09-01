@@ -2,6 +2,7 @@
 
 namespace AE\BackOfficeBundle\Controller;
 
+use AE\BackOfficeBundle\Form\UserAddType;
 use AE\BackOfficeBundle\Form\UserEditType;
 use AE\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

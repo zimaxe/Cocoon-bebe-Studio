@@ -7,3 +7,4 @@ ae_booking_homepage:
 ae_booking_slots:
     path:     /slots
     defaults: { _controller: AEBookingBundle:Customer:getSlots}
+
