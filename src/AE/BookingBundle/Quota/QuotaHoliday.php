@@ -10,17 +10,36 @@ namespace AE\BookingBundle\Quota;
 use AE\BookingBundle\Entity\Quota;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Class QuotaHoliday
+ * @package AE\BookingBundle\Quota
+ */
 class QuotaHoliday
 {
+    /**
+     * @var EntityManager
+     */
     private $em;
+    /**
+     * @var
+     */
     private $maxSlots;
 
+    /**
+     * QuotaHoliday constructor.
+     * @param $maxSlots
+     * @param EntityManager $manager
+     */
     public function __construct($maxSlots, EntityManager $manager)
     {
         $this->em = $manager;
         $this->maxSlots = $maxSlots;
     }
 
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
     public function decrementQuota($startDate, $endDate)
     {
 
