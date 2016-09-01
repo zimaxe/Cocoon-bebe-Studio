@@ -21,7 +21,8 @@ class QuotaHoliday
         $this->maxSlots = $maxSlots;
     }
 
-    public function decrementQuota($startDate, $endDate) {
+    public function decrementQuota($startDate, $endDate)
+    {
 
         //On recherche le nombre de photographe
         $users = $this->em->getRepository('AEUserBundle:User')->getAdmins();
@@ -31,14 +32,14 @@ class QuotaHoliday
         //On affiche toutes les dates entre startDate et endDate :
         $daysBetween = [];
         foreach (new \DatePeriod($startDate, \DateInterval::createFromDateString('1 day'), $endDate) as $dt) {
-            if(!$dt->format('w') == "0"){
-                $daysBetween[] =  $dt->format('Y-m-d');
+            if (!$dt->format('w') == "0") {
+                $daysBetween[] = $dt->format('Y-m-d');
             }
 
         }
 
         // On ajoute le dernier jour (endDate) au tableau si != de dimanche
-        if(!$endDate->format('w') == "0") {
+        if (!$endDate->format('w') == "0") {
             $daysBetween[] = $endDate->format('Y-m-d');
         }
         //dump($daysBetween); die();
@@ -47,7 +48,7 @@ class QuotaHoliday
         $quotaExist = $this->em->getRepository('AEBookingBundle:Quota')->getHolidaySlots($startDate, $endDate);
         $quotas = [];
         //On affiche tous les jours de quotas
-        foreach($quotaExist as $q){
+        foreach ($quotaExist as $q) {
             $quotas[] = $q->getQuotaDay()->format('Y-m-d');
         }
 
@@ -55,21 +56,18 @@ class QuotaHoliday
         $compareDate = array_diff($daysBetween, $quotas);
 
         //Boucle sur les dates de vacances
-        foreach($daysBetween as $db)
-        {
-            if(!in_array($db, $compareDate)){
+        foreach ($daysBetween as $db) {
+            if (!in_array($db, $compareDate)) {
                 $newQuota = $quota->getQuotaNb() - $this->maxSlots;
-                if($newQuota < 0 ){
+                if ($newQuota < 0) {
                     $newQuota = 0;
                 }
-                foreach($quotaExist as $quota){
-                    if($quota->getQuotaDay() == new \DateTime($db)){
+                foreach ($quotaExist as $quota) {
+                    if ($quota->getQuotaDay() == new \DateTime($db)) {
                         $quota->setQuotaNb($newQuota);
                     }
                 }
-
-
-            }else {
+            } else {
                 $quota = new Quota();
                 $newQuota = $totalQuota - $this->maxSlots;
                 $quota->setQuotaDay(new \DateTime($db));
