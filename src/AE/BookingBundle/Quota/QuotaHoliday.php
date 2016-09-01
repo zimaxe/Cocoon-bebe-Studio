@@ -16,13 +16,7 @@ use Doctrine\ORM\EntityManager;
  */
 class QuotaHoliday
 {
-    /**
-     * @var EntityManager
-     */
     private $em;
-    /**
-     * @var
-     */
     private $maxSlots;
 
     /**
