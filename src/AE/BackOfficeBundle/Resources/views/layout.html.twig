@@ -6,40 +6,175 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         {% block title %}
-            Céline
+            Mon Bébé Photo Administration
         {% endblock %}
     </title>
 
     {% block stylesheets %}
-        {% stylesheets filter='cssrewrite, ?scssphp'
-        'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'
-        %}
+        {% stylesheets filter='cssrewrite'
+        "bundles/backoffice/css/bootstrap.min.css"
+        "bundles/backoffice/css/bootstrap-reset.css"
+        "bundles/backoffice/css/style.css"
+        "bundles/backoffice/css/style-responsive.css"
+        "bundles/backoffice/css/font-awesome/css/font-awesome.min.css" %}
         <link rel="stylesheet" href="{{ asset_url }}">
         {% endstylesheets %}
     {% endblock %}
 </head>
 <body>
 
-{% for message in app.session.flashbag.get('notif') %}
-    <div class="col-md-12">
-        <div class="alert alert-info" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ message }}
+<section id="container">
+    <!--header start-->
+    <header class="header white-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right"
+                 data-original-title="Afficher/Masquer la navigation"></div>
         </div>
-    </div>
-{% endfor %}
+        <!--logo start-->
+        <a href="<?php echo $this->Html->url('/'); ?>" class="logo" target="_blank">Mon Bébé<span> Photo</span>
+            <small>ADMIN</small>
+        </a>
+        <!--logo end-->
+        <div class="top-nav ">
+            <!--search & user info start-->
+            <ul class="nav pull-right top-menu">
 
-{% block body %}
-{% endblock %}
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                        <i class="fa fa-user" style="color:#FF6C60; font-size: 1.5em;">&nbsp;</i>
+                        <span class="username"> {{ app.user.firstname|capitalize }} {{ app.user.name|capitalize }} </span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <div class="log-arrow-up"></div>
+                        <li>
+                            <a href="{{ path("ae_backoffice_user_edit", {'id': app.user.id}) }}"><i
+                                        class=" fa fa-suitcase"></i>Mon compte</a></li>
+                        <li>
+                            <a href="{{ path("logout") }}"><i
+                                        class="fa fa-key"></i> Déconnexion</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!--search & user info end-->
+        </div>
+    </header>
+    <!--header end-->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li>
+                    <a href="">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;"
+                       class="">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Réservations</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="">Liste des réservations</a></li>
+                        <li><a href="">Ajouter une réservation</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;"
+                       {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_index' or app.request.attributes.get('_route') == 'ae_backoffice_holiday_add' %}class="active"{% endif %}>
+                        <i class="fa fa-bell-o"></i>
+                        <span>Congés <small>gestion</small></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{ path('ae_backoffice_holiday_index', {'userId': app.user.id}) }}"
+                               {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_index' %}class="active"{% endif %}>Liste
+                                des congés</a></li>
+                        <li><a href="{{ path('ae_backoffice_holiday_add') }}"
+                               {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_add' %}class="active"{% endif %}>Ajouter
+                                un congé</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;"
+                       {% if app.request.attributes.get('_route') == 'ae_backoffice_user_index' or app.request.attributes.get('_route') == 'ae_backoffice_user_add' %}class="active"{% endif %}>
+                        <i class="fa fa-camera"></i>
+                        <span>Photographes</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{ path('ae_backoffice_user_index') }}"
+                               {% if app.request.attributes.get('_route') == 'ae_backoffice_user_index' %}class="active"{% endif %}>Liste
+                                des photographes</a></li>
+                        <li><a href="{{ path('ae_backoffice_user_add') }}"
+                               {% if app.request.attributes.get('_route') == 'ae_backoffice_user_add' %}class="active"{% endif %}>Ajouter
+                                un photographe</a></li>
+                    </ul>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="">
+                        <i class="fa fa-cogs"></i>
+                        <span>Options Générales</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="">
+                        <i class="fa fa-lock"></i>
+                        <span>Fermeture du service</span>
+                    </a>
+                </li>
+                <!--multi level menu end-->
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!--sidebar end-->
+    <section id="main-content">
+        <section class="wrapper site-min-height">
+            {% block body %}
+                {% for message in app.session.flashbag.get('notif') %}
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        </section>
+    </section>
+</section>
+<!--footer start-->
+<footer class="site-footer">
+    <div class="text-center">
+        2015 &copy; Administration par <a href="http://aetza.com" target="_blank">Aetza</a>.
+        <a href="#" class="go-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+    </div>
+</footer>
+<!--footer end-->
 
 {% javascripts filter='?jsqueeze'
-'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'
-'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
-%}
+'https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+'bundles/backoffice/js/bootstrap.min.js'
+'bundles/backoffice/js/jquery.dcjqaccordion.2.7.js'
+'bundles/backoffice/js/jquery.scrollTo.min.js'
+'bundles/backoffice/js/jquery.nicescroll.js'
+'bundles/backoffice/js/jquery.sparkline.js'
+'bundles/backoffice/js/jquery.customSelect.min.js'
+'bundles/backoffice/js/respond.min.js'
+'bundles/backoffice/js/common-scripts.js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-{% block js %}
-{% endblock %}
+{% block js %}{% endblock %}
 
 </body>
 </html>

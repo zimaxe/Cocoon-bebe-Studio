@@ -1,7 +1,118 @@
-{% extends "::base.html.twig" %}
+{% extends "@AEBackOffice/layout.html.twig" %}
 
-{% block title %}AEBackOfficeBundle:Holiday:index{% endblock %}
+{% block title %} {{ parent() }} - Liste des congés{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        "bundles/backoffice/css/datatables/adv-table.css"
+        "bundles/backoffice/css/datatables/dt-bootstrap.css"
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Holiday:index page</h1>
+    {{ parent() }}
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h2>
+                        <i class="fa fa-bell-o"></i>&nbsp;&nbsp;GESTION DES CONGES  {% if holidays %} DE {{ holidays.0.user.email|upper }}{% endif %}
+                        <small>Liste</small>
+                    </h2>
+                </header>
+                <div class="panel-body">
+                    <a href="{{ path('ae_backoffice_holiday_add') }}">
+                        <button class="btn btn-success btn-shadow"><i class="fa fa-users"></i>&nbsp;&nbsp;AJOUTER UN
+                            CONGE
+                        </button>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Liste des congés
+                </header>
+                <div class="panel-body">
+                    <div class="adv-table">
+                        <table id="table-content" class="display table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Début du congé</th>
+                                <th>Fin du congé</th>
+                                <th>Photographe</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for h in holidays %}
+                            <tr>
+                                <td>{{ h.dateStart|date('d/m/Y') }}</td>
+                                <td>{{ h.dateEnd|date('d/m/Y') }} </td>
+                                <td>{{ h.user.firstName|capitalize }} {{ app.user.name|capitalize }} - <a href="mailto:{{ h.user.email }}">{{ h.user.email }}</a></td>
+
+
+                                <td>
+                                    <a href="{{ path("ae_backoffice_holiday_edit", {'id': h.id}) }}" class="btn btn-shadow btn-info btn-xs">Editer</a>
+                                    <a href="{{ path("ae_backoffice_holiday_delete", {'id': h.id}) }}" class="btn btn-shadow btn-danger btn-xs" onclick="return confirm('Êtes-vous sûre de vouloir suppimer ce congé ?')">Supprimer</a>
+                                </td>
+                            </tr>
+                           {%  endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 {% endblock %}
+
+    {% block js %}
+        {{ parent() }}
+        {% javascripts filter='?jsqueeze'
+            '//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js'
+            'bundles/backoffice/js/plugins/datatables/dataTables.bootstrap.js'
+            '//cdn.datatables.net/plug-ins/3cfcc339e89/sorting/date-eu.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script>
+            $(function () {
+                $('#table-content').DataTable({
+                    bStateSave: true,
+                    columnDefs: [
+                        {type: 'date-eu', targets: [0,1]}
+                    ],
+                    language: {
+                        processing: "Traitement en cours...",
+                        search: "Rechercher&nbsp;&nbsp;",
+                        lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                        info: "Affichage des &eacute;lement _START_ &agrave; _END_ sur un total de _TOTAL_",
+                        infoEmpty: "Aucun &eacute;l&eacute;ment",
+                        infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                        infoPostFix: "",
+                        loadingRecords: "Chargement en cours...",
+                        zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                        emptyTable: "Aucune donnée disponible dans le tableau",
+                        paginate: {
+                            first: "Premier",
+                            previous: "Pr&eacute;c&eacute;dent",
+                            next: "Suivant",
+                            last: "Dernier"
+                        },
+                        aria: {
+                            sortAscending: ": activer pour trier la colonne par ordre croissant",
+                            sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                        }
+                    }
+                });
+            });
+        </script>
+    {% endblock %}

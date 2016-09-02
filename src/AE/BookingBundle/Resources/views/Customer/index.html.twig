@@ -32,8 +32,7 @@
             success: function(data) {
                 $('.datetimepicker').datetimepicker({
                     locale: 'fr',
-                    useCurrent: true,
-                    minDate: new Date(),
+                    minDate: new Date().setHours(0,0,0,0) ,
                     daysOfWeekDisabled: [0],
                     disabledDates: data
                 });

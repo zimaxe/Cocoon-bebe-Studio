@@ -3,10 +3,11 @@
 namespace AE\BackOfficeBundle\Controller;
 
 use AE\BackOfficeBundle\Form\UserAddType;
-use AE\BackOfficeBundle\Form\UserEditType;
+use AE\BackOfficeBundle\Form\UserBackOfficeType;
 use AE\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 
 class UserController extends Controller
@@ -14,11 +15,9 @@ class UserController extends Controller
 
     public function loginAction(Request $request)
     {
-
         if( $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
             return $this->redirectToRoute('ae_booking_homepage');
         }
-
         $authenticationUtils = $this->get('security.authentication_utils');
 
         return $this->render('AEBackOfficeBundle:User:login.html.twig', array(
@@ -28,24 +27,19 @@ class UserController extends Controller
     }
 
 
-    public function customersAction()
+    public function indexAction()
     {
-        return $this->render('AEBackOfficeBundle:User:customers.html.twig', array(
-            // ...
-        ));
-    }
-
-    public function adminsAction()
-    {
-        return $this->render('AEBackOfficeBundle:User:admins.html.twig', array(
-            // ...
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('AEUserBundle:User')->findAll();
+        return $this->render('AEBackOfficeBundle:User:index.html.twig', array(
+            'users' => $users
         ));
     }
 
     public function addAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm(UserAddType::class, $user);
+        $form = $this->createForm(UserBackOfficeType::class, $user);
 
         //Handle the submit (only on POST)
         $form->handleRequest($request);
@@ -78,37 +72,20 @@ class UserController extends Controller
         $user = $em->getRepository('AEUserBundle:User')->find($id);
 
 
-        //Create form
-        $form = $this->createForm(UserEditType::class, $user);
-
-        //Value of plainPassword
-        $plainFirst = $request->request->all()['user_edit']['plainPassword']['first'];
-        $plainSecond = $request->request->all()['user_edit']['plainPassword']['second'];
-
-        $isNewPassword = ( $plainFirst == "" )? false : true;
-
-        if( !$isNewPassword ){
-            $oldPassword = $user->getPassword();
-            $request->request->set($plainFirst, $oldPassword );
-            $request->request->set($plainSecond, $oldPassword );
-
-            dump($request->request); die();
-        }else{
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
+        if(null === $user){
+            throw new NotFoundResourceException("notif", "Ce photographe n'existe pas !!!");
         }
+
+        //Create form
+        $form = $this->createForm(UserBackOfficeType::class, $user);
+
 
         //Handle form
         $form->handleRequest($request);
-        if($form->isSubmitted()) {
-            if($form->isValid()){
+        if($form->isSubmitted() && $form->isValid()) {
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("notif", "L'utilisateur a bien été éditée !");
                 return $this->redirectToRoute("ae_backoffice_admins", ['id' => $user->getId()]);
-            }
-
-
-
         }
 
 

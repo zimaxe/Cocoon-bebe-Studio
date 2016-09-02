@@ -30,3 +30,4 @@ register:
     path: /register
     defaults:
         _controller: AEUserBundle:Security:register
+

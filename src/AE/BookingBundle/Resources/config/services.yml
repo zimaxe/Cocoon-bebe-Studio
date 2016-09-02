@@ -7,3 +7,8 @@ services:
   ae_booking.quota.quota_holiday:
     class: AE\BookingBundle\Quota\QuotaHoliday
     arguments: ['%max_slot%', '@doctrine.orm.entity_manager']
+
+  ae_booking.quota.quota_holiday_delete:
+    class: AE\BookingBundle\Quota\QuotaHolidayDelete
+    arguments: ['%max_slot%','@doctrine.orm.entity_manager']
+

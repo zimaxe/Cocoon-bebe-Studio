@@ -71,12 +71,10 @@ class QuotaHoliday
         //Boucle sur les dates de vacances
         foreach ($daysBetween as $db) {
             if (!in_array($db, $compareDate)) {
-                $newQuota = $quota->getQuotaNb() - $this->maxSlots;
-                if ($newQuota < 0) {
-                    $newQuota = 0;
-                }
+
                 foreach ($quotaExist as $quota) {
                     if ($quota->getQuotaDay() == new \DateTime($db)) {
+                        $newQuota = $quota->getQuotaNb() - $this->maxSlots;
                         $quota->setQuotaNb($newQuota);
                     }
                 }

@@ -1,24 +1,20 @@
 ################### USER #######################################
-ae_backoffice_customers:
-    path:     /user/customers
-    defaults: { _controller: AEBackOfficeBundle:User:customers }
+ae_backoffice_user_index:
+    path:     /utilisateurs/photographes
+    defaults: { _controller: AEBackOfficeBundle:User:index }
 
-ae_backoffice_admins:
-    path:     /user/admins
-    defaults: { _controller: AEBackOfficeBundle:User:admins }
-
-ae_backoffice_add_user:
-    path:     /user/add
+ae_backoffice_user_add:
+    path:     /utilisateurs/ajouter
     defaults: { _controller: AEBackOfficeBundle:User:add }
 
-ae_backoffice_edit_user:
-    path:     user/edit/{id}
+ae_backoffice_user_edit:
+    path:     utilisateurs/editer/{id}
     defaults: { _controller: AEBackOfficeBundle:User:edit }
     requirements:
       id: \d+
 
-ae_backoffice_delete_user:
-    path:     user/delete
+ae_backoffice_user_delete:
+    path:     utilisateurs/supprimer
     defaults: { _controller: AEBackOfficeBundle:User:delete }
 
 
@@ -26,6 +22,8 @@ ae_backoffice_delete_user:
 ae_backoffice_holiday_index:
     path:     /holidays/{userId}
     defaults: { _controller: AEBackOfficeBundle:Holiday:index }
+    requirements:
+      userId: \d+
 
 ae_backoffice_holiday_add:
     path:     /holidays/add
@@ -34,7 +32,17 @@ ae_backoffice_holiday_add:
 ae_backoffice_holiday_edit:
     path:     /holidays/edit/{id}
     defaults: { _controller: AEBackOfficeBundle:Holiday:edit }
+    requirements:
+      userId: \d+
 
 ae_backoffice_holiday_delete:
     path:     /holidays/delete/{id}
     defaults: { _controller: AEBackOfficeBundle:Holiday:delete }
+    requirements:
+      userId: \d+
+
+ae_backoffice_grid:
+    path: /holidays/grid
+    defaults: { _controller: AEBackOfficeBundle:Holiday:grid }
+
+

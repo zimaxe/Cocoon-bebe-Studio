@@ -1,4 +1,1 @@
 services:
-#    ae_back_office.example:
-#        class: AE\BackOfficeBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
