@@ -38,9 +38,9 @@ class QuotaHoliday
     {
 
         //On recherche le nombre de photographe
-        $users = $this->em->getRepository('AEUserBundle:User')->getAdmins();
+        $photographers = $this->em->getRepository('AEUserBundle:User')->getPhotographersCount();
         //On calcul le quota maximal actuel
-        $totalQuota = ($users * $this->maxSlots);
+        $totalQuota = ($photographers * $this->maxSlots);
 
         //On affiche toutes les dates entre startDate et endDate :
         $daysBetween = [];
