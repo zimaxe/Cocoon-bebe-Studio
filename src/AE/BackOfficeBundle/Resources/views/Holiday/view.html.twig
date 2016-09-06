@@ -20,9 +20,20 @@
                 <header class="panel-heading">
                     <h2>
                         <i class="fa fa-bell-o"></i>&nbsp;&nbsp;{{ 'Gestion des congés'|upper }}
-                        <small>Liste des photographes</small>
+                        <small> de {{ user.firstname|capitalize }} {{ user.name|upper }}</small>
                     </h2>
                 </header>
+                <div class="panel-body">
+                    <a href="{{ path('ae_backoffice_holiday_index') }}">
+                        <button class="btn btn-danger btn-shadow"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;RETOUR
+                        </button>
+                    </a>
+                    <a href="{{ path('ae_backoffice_holiday_add', {'userId': user.id}) }}">
+                        <button class="btn btn-success btn-shadow"><i class="fa fa-bell"></i>&nbsp;&nbsp;AJOUTER UN
+                            CONGE
+                        </button>
+                    </a>
+                </div>
             </section>
         </div>
     </div>
@@ -38,18 +49,23 @@
                         <table id="table-content" class="display table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Nom</th>
-                                <th>Prénom</th>
+                                <th>Début du congé</th>
+                                <th>Fin du congé</th>
+                                <th>Photographe</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for u in users %}
+                            {% for h in holidays %}
                             <tr>
-                                <td>{{ u.name|capitalize }}</td>
-                                <td>{{ u.firstname|capitalize }} </td>
+                                <td>{{ h.dateStart|date('d/m/Y') }}</td>
+                                <td>{{ h.dateEnd|date('d/m/Y') }} </td>
+                                <td><a href="{{ path('ae_backoffice_user_edit', {'id': h.user.id}) }}">{{ h.user.firstName|capitalize }} {{ h.user.name|capitalize }}</a></td>
+
+
                                 <td>
-                                    <a href="{{ path("ae_backoffice_holiday_view", {'userId': u.id}) }}" class="btn btn-shadow btn-info btn-xs">Gérer les congés</a>
+                                    <a href="{{ path("ae_backoffice_holiday_edit", {'id': h.id}) }}" class="btn btn-shadow btn-info btn-xs">Editer</a>
+                                    <a href="{{ path("ae_backoffice_holiday_delete", {'id': h.id}) }}" class="btn btn-shadow btn-danger btn-xs" onclick="return confirm('Êtes-vous sûre de vouloir suppimer ce congé ?')">Supprimer</a>
                                 </td>
                             </tr>
                            {%  endfor %}
@@ -75,6 +91,9 @@
             $(function () {
                 $('#table-content').DataTable({
                     bStateSave: true,
+                    columnDefs: [
+                        {type: 'date-eu', targets: [0,1]}
+                    ],
                     language: {
                         processing: "Traitement en cours...",
                         search: "Rechercher&nbsp;&nbsp;",

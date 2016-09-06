@@ -10,4 +10,27 @@ namespace AE\BookingBundle\Repository;
  */
 class HolidayRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getUserHolidays($userId){
+        $qb = $this->createQueryBuilder('h');
+
+        $qb
+            ->where('h.user = :userId')->setParameter('userId', $userId)
+            ->andWhere('h.dateEnd >= :today')->setParameter('today', new \DateTime())
+            ->orderBy('h.dateStart', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getHolidays()
+    {
+        $qb = $this->createQueryBuilder('h');
+
+        $qb
+            ->where('h.dateEnd >= :today')->setParameter('today', new \DateTime())
+            ->orderBy('h.dateStart', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

@@ -10,14 +10,36 @@ namespace AE\UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getAdmins()
+    public function getPhotographersCount()
     {
         $qb = $this->createQueryBuilder('u');
 
         $qb
             ->select('COUNT(u)')
-            ->where('u.roles LIKE :role')->setParameter('role', "%ROLE_ADMIN%");
+            ->where('u.roles LIKE :role')->setParameter('role', "%ROLE_PHOTOGRAPHER%")
+            ->andWhere('u.isActive = :active')->setParameter('active', true);
 
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getPhotographers()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->where('u.roles LIKE :role')->setParameter('role', "%ROLE_PHOTOGRAPHER%");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getActivePhotographers()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->where('u.roles LIKE :role')->setParameter('role', "%ROLE_PHOTOGRAPHER%")
+            ->andWhere('u.isActive = :active')->setParameter('active', true);
+
+        return $qb->getQuery()->getResult();
     }
 }

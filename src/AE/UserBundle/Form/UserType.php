@@ -24,18 +24,15 @@ class UserType extends AbstractType
         $builder
             ->add('name', TextType::class, array('label' => 'Nom', 'attr' => array('class' => 'form-control')))
             ->add('firstName', TextType::class, array('label' => 'Prénom', 'attr' => array('class' => 'form-control')))
-            ->add('email', EmailType::class, array('label' => 'Email', 'attr' => array('class' => 'form-control')))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options' => array('label' => 'Mot de passe', 'attr' => array('class' => 'form-control')),
-                'second_options' => array('label' => 'Confirmer le mot de passe', 'attr' => array('class' => 'form-control'))
-            ));
+            ->add('email', EmailType::class, array('label' => 'Email', 'attr' => array('class' => 'form-control')));
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AE\UserBundle\Entity\User'
+            'data_class' => 'AE\UserBundle\Entity\User',
+            'validation_groups' => ['registration', 'edit']
         ));
     }
 

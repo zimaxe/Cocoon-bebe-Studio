@@ -5,6 +5,7 @@ namespace AE\BackOfficeBundle\Controller;
 use AE\BackOfficeBundle\Form\HolidayType;
 use AE\BookingBundle\Entity\Holiday;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
@@ -15,17 +16,31 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
  */
 class HolidayController extends Controller
 {
+
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository("AEUserBundle:User")->getActivePhotographers();
+
+        return $this->render('AEBackOfficeBundle:Holiday:index.html.twig', array(
+            'users' => $users
+        ));
+    }
+
+
     /**
      * @param $userId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($userId)
+    public function viewAction($userId)
     {
         $em = $this->getDoctrine()->getManager();
         $holidays = $em->getRepository("AEBookingBundle:Holiday")->findBy(['user' => $userId]);
+        $user = $em->getRepository("AEUserBundle:User")->findOneBy([ 'id' => $userId ]);
 
-        return $this->render('AEBackOfficeBundle:Holiday:index.html.twig', array(
-            'holidays' => $holidays
+        return $this->render('AEBackOfficeBundle:Holiday:view.html.twig', array(
+            'holidays' => $holidays,
+            'user' => $user
         ));
     }
 
@@ -33,15 +48,17 @@ class HolidayController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function addAction(Request $request)
+    public function addAction($userId, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository("AEUserBundle:User")->findOneBy([ 'id' => $userId ]);
         $holiday = new Holiday();
         $form = $this->createForm(HolidayType::class, $holiday);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $holiday->setUser($this->getUser());
+
+            $holiday->setUser($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($holiday);
@@ -52,13 +69,37 @@ class HolidayController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add("notif", "Votre congé a bien été pris en compte !");
-            return $this->redirectToRoute("ae_backoffice_holiday_index", array('userId' => $holiday->getUser()->getId()));
+            return $this->redirectToRoute("ae_backoffice_holiday_view", array('userId' => $user->getId()));
 
         }
 
         return $this->render('AEBackOfficeBundle:Holiday:add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'user' => $user
         ));
+    }
+
+
+    public function getAjaxHolidaysAction($userId, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $holidays = $em->getRepository("AEBookingBundle:Holiday")->getUserHolidays($userId);
+
+
+        //On affiche tous les jours de quotas
+        $daysList = [];
+        foreach ($holidays as $h) {
+            //dump($h->getDateStart()); die();
+            foreach (new \DatePeriod($h->getDateStart(), \DateInterval::createFromDateString('1 day'), $h->getDateEnd()) as $dt) {
+                    $daysList[] = $dt->format('Y-m-d');
+            }
+            // On ajoute le dernier jour (endDate) au tableau si != de dimanche
+            $daysList[] = $h->getDateEnd()->format('Y-m-d');
+
+        }
+
+        return new JsonResponse($daysList);
+
     }
 
     /**
@@ -90,7 +131,7 @@ class HolidayController extends Controller
         $em->flush();
 
         $request->getSession()->getFlashBag()->add("notif", "Votre congé a bien été supprimé !");
-        return $this->redirectToRoute("ae_backoffice_holiday_index", array('userId' => $holiday->getUser()->getId()));
+        return $this->redirectToRoute("ae_backoffice_holiday_view", array('userId' => $holiday->getUser()->getId()));
     }
 
 }

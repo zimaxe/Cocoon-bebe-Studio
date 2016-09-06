@@ -13,14 +13,13 @@
         <section class="panel">
             <header class="panel-heading">
                 <h2>
-                    GESTION DES CONGES
-                    <small>Ajouter</small>
+                    {{ 'Gestion des congés'|upper }}
+                    <small>de {{ user.firstName|capitalize }} {{ user.name|upper }}</small>
                 </h2>
             </header>
             <div class="panel-body">
-                <a href="{{ path('ae_backoffice_user_index',{'userId': app.user.id }) }}">
-                    <button class="btn btn-danger btn-shadow"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;RETOUR
-                    </button>
+                <a href="{{ path('ae_backoffice_holiday_view', {'userId': user.id}) }}">
+                    <button class="btn btn-danger btn-shadow"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;RETOUR</button>
                 </a>
             </div>
         </section>
@@ -32,7 +31,7 @@
     <div class="col-lg-7">
         <section class="panel">
             <header class="panel-heading">
-                Le congé
+                Ajouter un congé
             </header>
 
             <div class="panel-body">
@@ -64,6 +63,9 @@
     </div>
 
     {{ form_end(form) }}
+
+    <a href="{{ path('ae_backoffice_holiday_ajax', {'userId': user.id}) }}" id="pathSlots"></a>
+
 {% endblock %}
 
 {% block js %}
@@ -75,21 +77,55 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-        $(function () {
-            $('.datetimepicker1').datetimepicker({
-                locale: 'fr',
-                minDate: new Date().setHours(0,0,0,0)
-            });
-            $('.datetimepicker2').datetimepicker({
-                locale: 'fr',
-                useCurrent: false //Important! See issue #1075
-            });
-            $(".datetimepicker1").on("dp.change", function (e) {
-                $('.datetimepicker2').data("DateTimePicker").minDate(e.date);
-            });
-            $(".datetimepicker2").on("dp.change", function (e) {
-                $('.datetimepicker1').data("DateTimePicker").maxDate(e.date);
-            });
+
+        var url = $('#pathSlots').attr('href');
+        $.ajax({
+            type: 'GET',
+            url: url,
+            timeout: 3000,
+            success: function(data) {
+                $('.datetimepicker1').datetimepicker({
+                    locale: 'fr',
+                    minDate: new Date().setHours(0,0,0,0),
+                    disabledDates: data
+                });
+
+                $('.datetimepicker2').datetimepicker({
+                    locale: 'fr',
+                    useCurrent: false, //Important! See issue #1075
+                    disabledDates: data
+                });
+                $(".datetimepicker1").on("dp.change", function (e) {
+                    $('.datetimepicker2').data("DateTimePicker").minDate(e.date);
+                });
+                $(".datetimepicker2").on("dp.change", function (e) {
+                    $('.datetimepicker1').data("DateTimePicker").maxDate(e.date);
+                });
+
+            },
+            error: function() {
+                alert('La requête n\'a pas abouti'); }
         });
+
+        var preventDoubleSubmission;
+
+        preventDoubleSubmission = function() {
+            $(this).on('submit',function(e){
+                var $form = $(this);
+
+                if ($form.data('submitted') === true) {
+                    // Previously submitted - don't submit again
+                    e.preventDefault();
+                } else {
+                    // Mark it so that the next submit can be ignored
+                    $form.data('submitted', true);
+                }
+            });
+
+            // Keep chainability
+            return this;
+        };
+        $('form').preventDoubleSubmission();
     </script>
 {% endblock %}
+</div>

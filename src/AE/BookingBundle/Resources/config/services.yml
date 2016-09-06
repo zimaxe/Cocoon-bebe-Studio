@@ -12,3 +12,17 @@ services:
     class: AE\BookingBundle\Quota\QuotaHolidayDelete
     arguments: ['%max_slot%','@doctrine.orm.entity_manager']
 
+  ae_booking.quota.quota_add_photographer:
+    class: AE\BookingBundle\Quota\QuotaAddPhotographer
+    arguments: ['%max_slot%','@doctrine.orm.entity_manager']
+
+  ae_booking.quota.quota_edit_photographer:
+    class: AE\BookingBundle\Quota\QuotaEditPhotographer
+    arguments: ['%max_slot%', '@doctrine.orm.entity_manager']
+
+
+  ae_user.doctrine_listener.user_is_not_active_listener:
+    class: AE\BookingBundle\DoctrineListener\UserIsNotActiveListener
+    arguments: ['@service_container', '@request_stack']
+    tags:
+      - { name: doctrine.event_listener,  event: postUpdate}

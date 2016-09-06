@@ -12,8 +12,6 @@ admin_login:
     defaults:
         _controller: AEBackOfficeBundle:User:login
 
-admin_login_check:
-    path: /admin/login_check
 
 login:
     path: /login
@@ -21,6 +19,9 @@ login:
         _controller: AEUserBundle:Security:login
 
 login_check:
+    path: /login_check
+
+admin_login_check:
     path: /login_check
 
 logout:

@@ -34,5 +34,18 @@ class QuotaRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getAllSlots()
+    {
+        $qb = $this->createQueryBuilder('q');
+
+        $qb
+            ->where('q.quotaDay >= :today')->setParameter('today', new \DateTime())
+            ->orderBy('q.quotaDay', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
 
 }

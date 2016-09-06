@@ -38,8 +38,8 @@ class QuotaCustomer
     {
 
         $quota = $this->em->getRepository('AEBookingBundle:Quota')->findOneBy(['quotaDay' => $orderDay]);
-        $admins = $this->em->getRepository('AEUserBundle:User')->getAdmins();
-        $totalQuota = ($admins * $this->maxSlots);
+        $photographers= $this->em->getRepository('AEUserBundle:User')->getPhotographersCount();
+        $totalQuota = ($photographers * $this->maxSlots);
 
         if ($quota) {
             $newQuota = $quota->getQuotaNb() - 1;

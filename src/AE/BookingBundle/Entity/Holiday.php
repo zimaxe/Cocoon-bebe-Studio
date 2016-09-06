@@ -2,6 +2,7 @@
 
 namespace AE\BookingBundle\Entity;
 
+use AE\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,7 +37,7 @@ class Holiday
     private $dateEnd;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AE\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AE\UserBundle\Entity\User", inversedBy="holiday")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -107,7 +108,7 @@ class Holiday
      *
      * @return Holiday
      */
-    public function setUser(\AE\UserBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 

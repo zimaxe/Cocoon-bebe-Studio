@@ -5,8 +5,8 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets filter='cssrewrite'
-        "bundles/backoffice/css/datatables/adv-table.css"
-        "bundles/backoffice/css/datatables/dt-bootstrap.css"
+    "bundles/backoffice/css/datatables/adv-table.css"
+    "bundles/backoffice/css/datatables/dt-bootstrap.css"
     %}
     <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
@@ -19,10 +19,16 @@
             <section class="panel">
                 <header class="panel-heading">
                     <h2>
-                        <i class="fa fa-bell-o"></i>&nbsp;&nbsp;{{ 'Gestion des congés'|upper }}
-                        <small>Liste des photographes</small>
+                        <i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;GESTION DES RESERVATIONS
+                        <small>Liste des réservations</small>
                     </h2>
                 </header>
+                <div class="panel-body">
+                    <a href="{{ path('ae_backoffice_user_add') }}">
+                        <button class="btn btn-success btn-shadow"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;{{ 'Ajouter une réservation'|upper }}
+                        </button>
+                    </a>
+                </div>
             </section>
         </div>
     </div>
@@ -31,7 +37,7 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                    Liste des congés
+                    Liste des réservations
                 </header>
                 <div class="panel-body">
                     <div class="adv-table">
@@ -39,20 +45,24 @@
                             <thead>
                             <tr>
                                 <th>Nom</th>
-                                <th>Prénom</th>
+                                <th>email</th>
+                                <th>Jour réservation</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for u in users %}
-                            <tr>
-                                <td>{{ u.name|capitalize }}</td>
-                                <td>{{ u.firstname|capitalize }} </td>
-                                <td>
-                                    <a href="{{ path("ae_backoffice_holiday_view", {'userId': u.id}) }}" class="btn btn-shadow btn-info btn-xs">Gérer les congés</a>
-                                </td>
-                            </tr>
-                           {%  endfor %}
+                            {% for c in customers %}
+                                <tr>
+                                    <td><a href="">{{ c.firstname|capitalize }} {{ c.name|upper }} </a></td>
+                                    <td><a href="mailto:{{ c.emailMother }}">{{ c.emailMother }}</a> </td>
+                                    <td>{{ c.orderDate|date('d/m/Y') }}</td>
+                                    <td>
+                                        <a href="" class="btn btn-shadow btn-primary btn-xs">Voir</a>
+                                        <a href="" class="btn btn-shadow btn-info btn-xs">Modifier</a>
+                                        <a href="" class="btn btn-shadow btn-danger btn-xs" onclick="return confirm('Êtes-vous sûre de vouloir suppimer la réservation de  {{ c.firstname|capitalize }} {{ c.name|upper }} ?')">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {%  endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -65,16 +75,19 @@
     {% block js %}
         {{ parent() }}
         {% javascripts filter='?jsqueeze'
-            '//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js'
-            'bundles/backoffice/js/plugins/datatables/dataTables.bootstrap.js'
-            '//cdn.datatables.net/plug-ins/3cfcc339e89/sorting/date-eu.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
+        '//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js'
+        'bundles/backoffice/js/plugins/datatables/dataTables.bootstrap.js'
+        '//cdn.datatables.net/plug-ins/3cfcc339e89/sorting/date-eu.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
         <script>
             $(function () {
                 $('#table-content').DataTable({
                     bStateSave: true,
+                    columnDefs: [
+                        {type: 'date-eu', targets: [2]}
+                    ],
                     language: {
                         processing: "Traitement en cours...",
                         search: "Rechercher&nbsp;&nbsp;",

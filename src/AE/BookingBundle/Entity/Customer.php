@@ -142,20 +142,6 @@ class Customer
     private $emailFather;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="user_id", type="integer", nullable=true)
-     */
-    private $userId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="maternity_id", type="integer", nullable=true)
-     */
-    private $maternityId;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="validate", type="boolean")
@@ -168,6 +154,12 @@ class Customer
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AE\BookingBundle\Entity\Maternity", inversedBy="customer")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $maternity;
     
 
 
@@ -598,55 +590,7 @@ class Customer
     {
         return $this->emailFather;
     }
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     *
-     * @return Customer
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Set maternityId
-     *
-     * @param integer $maternityId
-     *
-     * @return Customer
-     */
-    public function setMaternityId($maternityId)
-    {
-        $this->maternityId = $maternityId;
-
-        return $this;
-    }
-
-    /**
-     * Get maternityId
-     *
-     * @return integer
-     */
-    public function getMaternityId()
-    {
-        return $this->maternityId;
-    }
-
+    
     /**
      * Set validate
      *
@@ -695,4 +639,28 @@ class Customer
         return $this->createdAt;
     }
     
+
+    /**
+     * Set maternity
+     *
+     * @param \AE\BookingBundle\Entity\Maternity $maternity
+     *
+     * @return Customer
+     */
+    public function setMaternity(\AE\BookingBundle\Entity\Maternity $maternity)
+    {
+        $this->maternity = $maternity;
+
+        return $this;
+    }
+
+    /**
+     * Get maternity
+     *
+     * @return \AE\BookingBundle\Entity\Maternity
+     */
+    public function getMaternity()
+    {
+        return $this->maternity;
+    }
 }

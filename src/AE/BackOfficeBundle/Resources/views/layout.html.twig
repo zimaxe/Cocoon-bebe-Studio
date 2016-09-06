@@ -31,7 +31,7 @@
                  data-original-title="Afficher/Masquer la navigation"></div>
         </div>
         <!--logo start-->
-        <a href="<?php echo $this->Html->url('/'); ?>" class="logo" target="_blank">Mon Bébé<span> Photo</span>
+        <a href="{{ path('ae_booking_homepage') }}" class="logo" target="_blank">Mon Bébé<span> Photo</span>
             <small>ADMIN</small>
         </a>
         <!--logo end-->
@@ -76,29 +76,32 @@
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;"
-                       class="">
+                       {% if app.request.attributes.get('_route') == 'ae_backoffice_customer_index' or app.request.attributes.get('_route') == 'ae_backoffice_customer_add' %} class="active" {% endif %} >
                         <i class="fa fa-shopping-cart"></i>
                         <span>Réservations</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="">Liste des réservations</a></li>
+                        <li><a href="{{ path('ae_backoffice_customer_index') }}">Liste des réservations</a></li>
                         <li><a href="">Ajouter une réservation</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;"
-                       {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_index' or app.request.attributes.get('_route') == 'ae_backoffice_holiday_add' %}class="active"{% endif %}>
+                            {% if app.request.attributes.get('_route') == 'ae_backoffice_maternity_index' or app.request.attributes.get('_route') == 'ae_backoffice_maternity_add' %} class="active" {% endif %} >
+                        <i class="fa fa-hospital-o"></i>
+                        <span>Maternités</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{ path('ae_backoffice_maternity_index') }}">Liste des maternités</a></li>
+                        <li><a href="">Ajouter une maternité</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="{{ path('ae_backoffice_holiday_index') }}"
+                       {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_index' or app.request.attributes.get('_route') == 'ae_backoffice_holiday_view' or app.request.attributes.get('_route') == 'ae_backoffice_holiday_add' %}class="active"{% endif %}>
                         <i class="fa fa-bell-o"></i>
                         <span>Congés <small>gestion</small></span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="{{ path('ae_backoffice_holiday_index', {'userId': app.user.id}) }}"
-                               {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_index' %}class="active"{% endif %}>Liste
-                                des congés</a></li>
-                        <li><a href="{{ path('ae_backoffice_holiday_add') }}"
-                               {% if app.request.attributes.get('_route') == 'ae_backoffice_holiday_add' %}class="active"{% endif %}>Ajouter
-                                un congé</a></li>
-                    </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;"
@@ -116,6 +119,24 @@
                     </ul>
                     </a>
                 </li>
+                {% if is_granted('ROLE_AUTEUR') %}
+                    <li class="sub-menu">
+                        <a href="javascript:;"
+                           {% if app.request.attributes.get('_route') == 'ae_backoffice_user_index' or app.request.attributes.get('_route') == 'ae_backoffice_user_add' %}class="active"{% endif %}>
+                            <i class="fa fa-camera"></i>
+                            <span>Photographes</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{ path('ae_backoffice_user_index') }}"
+                                   {% if app.request.attributes.get('_route') == 'ae_backoffice_user_index' %}class="active"{% endif %}>Liste
+                                    des photographes</a></li>
+                            <li><a href="{{ path('ae_backoffice_user_add') }}"
+                                   {% if app.request.attributes.get('_route') == 'ae_backoffice_user_add' %}class="active"{% endif %}>Ajouter
+                                    un photographe</a></li>
+                        </ul>
+                        </a>
+                    </li>
+                {% endif %}
                 <li class="sub-menu">
                     <a href="">
                         <i class="fa fa-cogs"></i>

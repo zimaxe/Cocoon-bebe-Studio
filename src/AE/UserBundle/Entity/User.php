@@ -2,6 +2,8 @@
 
 namespace AE\UserBundle\Entity;
 
+
+use AE\BookingBundle\Entity\Holiday;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -51,14 +53,14 @@ class User implements AdvancedUserInterface, \Serializable
 
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank( message="Ce champs ne peut pas être vide !", groups={"registration"})
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank( groups={"registration"})
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -83,6 +85,14 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="roles", type="array")
      */
     private $roles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AE\BookingBundle\Entity\Holiday", mappedBy="user", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $holiday;
+
+
 
 
 
@@ -376,5 +386,29 @@ class User implements AdvancedUserInterface, \Serializable
     public function getFirstName()
     {
         return $this->firstName;
+    }
+
+    /**
+     * Set holiday
+     *
+     * @param \AE\UserBundle\Entity\Holiday $holiday
+     *
+     * @return User
+     */
+    public function setHoliday(Holiday $holiday)
+    {
+        $this->holiday = $holiday;
+
+        return $this;
+    }
+
+    /**
+     * Get holiday
+     *
+     * @return \AE\UserBundle\Entity\Holiday
+     */
+    public function getHoliday()
+    {
+        return $this->holiday;
     }
 }

@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new AE\BookingBundle\AEBookingBundle(),
             new AE\UserBundle\AEUserBundle(),
             new AE\BackOfficeBundle\AEBackOfficeBundle(),
-            new Waldo\DatatableBundle\WaldoDatatableBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
