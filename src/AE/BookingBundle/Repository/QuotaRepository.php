@@ -17,7 +17,7 @@ class QuotaRepository extends \Doctrine\ORM\EntityRepository
 
         $qb
             ->where('q.quotaNb <= :nb')->setParameter('nb', 0)
-            ->andWhere('q.quotaDay >= :today')->setParameter('today', new \DateTime())
+            ->andWhere('q.quotaDay >= :today')->setParameter('today', new \DateTime('00:00:00'))
             ->orderBy('q.quotaNb', 'ASC');
 
         return $qb->getQuery()->getResult();
@@ -39,7 +39,7 @@ class QuotaRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('q');
 
         $qb
-            ->where('q.quotaDay >= :today')->setParameter('today', new \DateTime())
+            ->where('q.quotaDay >= :today')->setParameter('today', new \DateTime('00:00:00'))
             ->orderBy('q.quotaDay', 'ASC');
 
         return $qb->getQuery()->getResult();

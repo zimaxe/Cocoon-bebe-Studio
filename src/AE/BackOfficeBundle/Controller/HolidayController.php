@@ -104,16 +104,6 @@ class HolidayController extends Controller
 
     /**
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function editAction($id)
-    {
-        return $this->render('AEBackOfficeBundle:Holiday:edit.html.twig', array(// ...
-        ));
-    }
-
-    /**
-     * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

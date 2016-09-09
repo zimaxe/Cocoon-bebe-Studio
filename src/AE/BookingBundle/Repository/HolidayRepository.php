@@ -16,7 +16,7 @@ class HolidayRepository extends \Doctrine\ORM\EntityRepository
 
         $qb
             ->where('h.user = :userId')->setParameter('userId', $userId)
-            ->andWhere('h.dateEnd >= :today')->setParameter('today', new \DateTime())
+            ->andWhere('h.dateEnd >= :today')->setParameter('today', new \DateTime('00:00:00'))
             ->orderBy('h.dateStart', 'ASC');
 
         return $qb->getQuery()->getResult();
@@ -27,7 +27,7 @@ class HolidayRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('h');
 
         $qb
-            ->where('h.dateEnd >= :today')->setParameter('today', new \DateTime())
+            ->where('h.dateEnd >= :today')->setParameter('today', new \DateTime('00:00:00'))
             ->orderBy('h.dateStart', 'ASC');
 
         return $qb->getQuery()->getResult();

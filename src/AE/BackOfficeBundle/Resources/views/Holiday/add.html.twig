@@ -13,7 +13,7 @@
         <section class="panel">
             <header class="panel-heading">
                 <h2>
-                    {{ 'Gestion des congés'|upper }}
+                    <i class="fa fa-bell-o"></i>&nbsp; {{ 'Gestion des congés'|upper }}
                     <small>de {{ user.firstName|capitalize }} {{ user.name|upper }}</small>
                 </h2>
             </header>
@@ -65,7 +65,7 @@
     {{ form_end(form) }}
 
     <a href="{{ path('ae_backoffice_holiday_ajax', {'userId': user.id}) }}" id="pathSlots"></a>
-
+</div>
 {% endblock %}
 
 {% block js %}
@@ -107,9 +107,7 @@
                 alert('La requête n\'a pas abouti'); }
         });
 
-        var preventDoubleSubmission;
-
-        preventDoubleSubmission = function() {
+        $.fn.preventDoubleSubmission = function() {
             $(this).on('submit',function(e){
                 var $form = $(this);
 
@@ -121,11 +119,9 @@
                     $form.data('submitted', true);
                 }
             });
-
             // Keep chainability
             return this;
         };
         $('form').preventDoubleSubmission();
     </script>
 {% endblock %}
-</div>

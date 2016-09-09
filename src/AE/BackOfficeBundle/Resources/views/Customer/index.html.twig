@@ -1,6 +1,6 @@
 {% extends "@AEBackOffice/layout.html.twig" %}
 
-{% block title %} {{ parent() }} - Liste des congés{% endblock %}
+{% block title %} {{ parent() }} - Liste des réservations{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -24,10 +24,6 @@
                     </h2>
                 </header>
                 <div class="panel-body">
-                    <a href="{{ path('ae_backoffice_user_add') }}">
-                        <button class="btn btn-success btn-shadow"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;{{ 'Ajouter une réservation'|upper }}
-                        </button>
-                    </a>
                 </div>
             </section>
         </div>
@@ -47,6 +43,7 @@
                                 <th>Nom</th>
                                 <th>email</th>
                                 <th>Jour réservation</th>
+                                <th>Maternité</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -56,10 +53,11 @@
                                     <td><a href="">{{ c.firstname|capitalize }} {{ c.name|upper }} </a></td>
                                     <td><a href="mailto:{{ c.emailMother }}">{{ c.emailMother }}</a> </td>
                                     <td>{{ c.orderDate|date('d/m/Y') }}</td>
+                                    <td>{{ c.maternity.name|capitalize }}</td>
                                     <td>
-                                        <a href="" class="btn btn-shadow btn-primary btn-xs">Voir</a>
-                                        <a href="" class="btn btn-shadow btn-info btn-xs">Modifier</a>
-                                        <a href="" class="btn btn-shadow btn-danger btn-xs" onclick="return confirm('Êtes-vous sûre de vouloir suppimer la réservation de  {{ c.firstname|capitalize }} {{ c.name|upper }} ?')">Supprimer</a>
+                                        <a href="{{ path('ae_backoffice_customer_view', {'id': c.id}) }}" class="btn btn-shadow btn-primary btn-xs">Voir</a>
+                                        <a href="{{ path('ae_backoffice_customer_edit', {'id': c.id}) }}" class="btn btn-shadow btn-info btn-xs">Editer</a>
+                                        <a href="{{ path('ae_backoffice_customer_delete', {'id': c.id}) }}" class="btn btn-shadow btn-danger btn-xs" onclick="return confirm('Êtes-vous sûre de vouloir suppimer la réservation de  {{ c.firstname|capitalize }} {{ c.name|upper }} ?')">Supprimer</a>
                                     </td>
                                 </tr>
                             {%  endfor %}
@@ -88,6 +86,7 @@
                     columnDefs: [
                         {type: 'date-eu', targets: [2]}
                     ],
+                    order: [[ 2, "desc" ]],
                     language: {
                         processing: "Traitement en cours...",
                         search: "Rechercher&nbsp;&nbsp;",

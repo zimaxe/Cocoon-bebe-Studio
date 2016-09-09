@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0d8d7373d670443c5c4d9facea7fc2ad",
+    "hash": "467866ea7d95fd4608d1d11fecceb3f3",
+    "content-hash": "d7061c93d26a7a5e9496d2ce5a4beb05",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1259,16 +1260,16 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.8",
+            "version": "v5.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "f8ace5c71ee309492b027ef71215577f5a52b4ea"
+                "reference": "e5e0d8d06b07864b2752bd865537b0817edf4c5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/f8ace5c71ee309492b027ef71215577f5a52b4ea",
-                "reference": "f8ace5c71ee309492b027ef71215577f5a52b4ea",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/e5e0d8d06b07864b2752bd865537b0817edf4c5a",
+                "reference": "e5e0d8d06b07864b2752bd865537b0817edf4c5a",
                 "shasum": ""
             },
             "require": {
@@ -1307,7 +1308,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-08-17 18:16:49"
+            "time": "2016-09-06 01:05:01"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -1994,16 +1995,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.1.3",
+            "version": "v3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "4478f047409028dc6e3ab320590f1247fec7a850"
+                "reference": "65ca9e4fbdb34f6d463ef77898ca583b101a4162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/4478f047409028dc6e3ab320590f1247fec7a850",
-                "reference": "4478f047409028dc6e3ab320590f1247fec7a850",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/65ca9e4fbdb34f6d463ef77898ca583b101a4162",
+                "reference": "65ca9e4fbdb34f6d463ef77898ca583b101a4162",
                 "shasum": ""
             },
             "require": {
@@ -2021,6 +2022,9 @@
             "conflict": {
                 "phpdocumentor/reflection-docblock": "<3.0",
                 "phpdocumentor/type-resolver": "<0.2.0"
+            },
+            "provide": {
+                "psr/cache-implementation": "1.0"
             },
             "replace": {
                 "symfony/asset": "self.version",
@@ -2043,6 +2047,7 @@
                 "symfony/framework-bundle": "self.version",
                 "symfony/http-foundation": "self.version",
                 "symfony/http-kernel": "self.version",
+                "symfony/inflector": "self.version",
                 "symfony/intl": "self.version",
                 "symfony/ldap": "self.version",
                 "symfony/monolog-bridge": "self.version",
@@ -2126,20 +2131,72 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-07-30 09:31:00"
+            "time": "2016-09-03 15:28:43"
         },
         {
-            "name": "twig/twig",
-            "version": "v1.24.1",
+            "name": "twig/extensions",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
+                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "~1.20|~2.0"
+            },
+            "require-dev": {
+                "symfony/translation": "~2.3"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "time": "2015-08-22 16:38:35"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v1.24.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
                 "shasum": ""
             },
             "require": {
@@ -2187,67 +2244,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-05-30 09:11:59"
-        },
-        {
-            "name": "waldo/datatable-bundle",
-            "version": "4.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/waldo2188/DatatableBundle.git",
-                "reference": "d01f2c827729c00741b4530ae6349dd9c014048f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/waldo2188/DatatableBundle/zipball/d01f2c827729c00741b4530ae6349dd9c014048f",
-                "reference": "d01f2c827729c00741b4530ae6349dd9c014048f",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": "~2.1",
-                "php": ">=5.4",
-                "twig/twig": "~1.8"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "~1.4",
-                "doctrine/orm": "^2.4.8",
-                "phpunit/phpunit": "~4.8",
-                "symfony/symfony": ">=2.6.0,<=4.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Waldo\\DatatableBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ali hichem",
-                    "email": "ali.hichem@mail.com",
-                    "role": "Original Developer"
-                },
-                {
-                    "name": "Sébastien Convers",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Valérian Girard",
-                    "email": "valerian.girard@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Symfony2 Ajax Datagrid Bundle for doctrine2 entities",
-            "homepage": "https://github.com/waldo2188/DatatableBundle",
-            "keywords": [
-                "Symfony2",
-                "datatable",
-                "jquery"
-            ],
-            "time": "2016-03-31 13:55:15"
+            "time": "2016-09-01 17:50:53"
         }
     ],
     "packages-dev": [
@@ -2366,75 +2363,17 @@
             "time": "2015-11-04 21:23:23"
         },
         {
-            "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "2f52d924692647db02bbcb27c159fef03bf000c9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/2f52d924692647db02bbcb27c159fef03bf000c9",
-                "reference": "2f52d924692647db02bbcb27c159fef03bf000c9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/console": "~2.0|3.*",
-                "symfony/framework-bundle": "~2.0|3.*",
-                "symfony/serializer": "~2.0|3.*",
-                "willdurand/jsonp-callback-validator": "~1.0"
-            },
-            "require-dev": {
-                "symfony/expression-language": "~2.4|3.*"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "FOS\\JsRoutingBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "FriendsOfSymfony Community",
-                    "homepage": "https://github.com/friendsofsymfony/FOSJsRoutingBundle/contributors"
-                },
-                {
-                    "name": "William Durand",
-                    "email": "william.durand1@gmail.com"
-                }
-            ],
-            "description": "A pretty nice way to expose your Symfony2 routing to client applications.",
-            "homepage": "http://friendsofsymfony.github.com",
-            "keywords": [
-                "Js Routing",
-                "javascript",
-                "routing"
-            ],
-            "time": "2015-10-28 15:08:39"
-        },
-        {
             "name": "sensio/generator-bundle",
-            "version": "v3.0.7",
+            "version": "v3.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "d1be460925376703a470a3ac6ec034eb7eab3892"
+                "reference": "3c20d16512f37d2be159eca0411b99a141b90fa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/d1be460925376703a470a3ac6ec034eb7eab3892",
-                "reference": "d1be460925376703a470a3ac6ec034eb7eab3892",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/3c20d16512f37d2be159eca0411b99a141b90fa4",
+                "reference": "3c20d16512f37d2be159eca0411b99a141b90fa4",
                 "shasum": ""
             },
             "require": {
@@ -2473,20 +2412,20 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2016-06-20 05:58:05"
+            "time": "2016-09-06 01:30:19"
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.1.3",
+            "version": "v3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "eeb3bf9a195df7552fdda46f4724a9442d157413"
+                "reference": "1f4e2059cf4ecae1053b9c3027b3fc548fd077b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/eeb3bf9a195df7552fdda46f4724a9442d157413",
-                "reference": "eeb3bf9a195df7552fdda46f4724a9442d157413",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/1f4e2059cf4ecae1053b9c3027b3fc548fd077b9",
+                "reference": "1f4e2059cf4ecae1053b9c3027b3fc548fd077b9",
                 "shasum": ""
             },
             "require": {
@@ -2528,47 +2467,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:42:25"
-        },
-        {
-            "name": "willdurand/jsonp-callback-validator",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/willdurand/JsonpCallbackValidator.git",
-                "reference": "1a7d388bb521959e612ef50c5c7b1691b097e909"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/JsonpCallbackValidator/zipball/1a7d388bb521959e612ef50c5c7b1691b097e909",
-                "reference": "1a7d388bb521959e612ef50c5c7b1691b097e909",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "JsonpCallbackValidator": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "William Durand",
-                    "email": "william.durand1@gmail.com",
-                    "homepage": "http://www.willdurand.fr"
-                }
-            ],
-            "description": "JSONP callback validator.",
-            "time": "2014-01-20 22:35:06"
+            "time": "2016-08-19 06:48:39"
         }
     ],
     "aliases": [],

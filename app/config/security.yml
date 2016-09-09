@@ -42,8 +42,6 @@ security:
             provider: main
             form_login:
               login_path: admin_login
-              use_forward: true
-              use_referer: true
               check_path: admin_login_check
               csrf_token_generator: security.csrf.token_manager
             logout:

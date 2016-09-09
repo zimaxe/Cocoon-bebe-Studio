@@ -1,0 +1,80 @@
+{% extends "@AEBackOffice/layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Calendrier des réservations{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        "bundles/backoffice/css/fullcalendar/fullcalendar.css"
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    <aside class="col-lg-9">
+        <section class="panel">
+            <div class="panel-body">
+                <div id="calendar" class="has-toolbar"></div>
+            </div>
+        </section>
+    </aside>
+    <a href="{{ path("ae_backoffice_customer_ajax") }}" data-link="{{ path("ae_backoffice_customer_date", {'date': '2016-09-09'}) }}" id="pathSlots"></a>
+
+{% endblock %}
+
+
+{% block js %}
+    {{ parent() }}
+    {% javascripts filter='?jsqueeze'
+        'bundles/backoffice/js/plugins/fullcalendar/lib/moment.min.js'
+        'bundles/backoffice/js/plugins/fullcalendar/lib/jquery-ui.min.js'
+        'bundles/backoffice/js/plugins/fullcalendar/fullcalendar.min.js'
+        'bundles/backoffice/js/plugins/fullcalendar/locale/fr.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        var url = $('#pathSlots').attr('href');
+        var link = $('#pathSlots').attr('data-link');
+        link = link.substring(0, link.length - 10);
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            timeout: 3000,
+            success: function(data) {
+                /* initialize the calendar
+                 -----------------------------------------------------------------*/
+
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,listYear',
+                        lang: 'fr'
+                    },
+                    listTime: false,
+                    editable: false,
+                    eventLimit: true,
+                    events: data,
+                    dayClick: function(date) {
+                        var d = new Date(date);
+                        var year = d.getFullYear();
+                        var month = "0" + ( d.getMonth() + 1);
+                            month = month.slice(-2);
+                        var day = ("0" + d.getDate()).slice(-2);
+                        window.location.replace(link + year + '-' + month + '-' + day);
+
+                    }
+
+                });
+
+            },
+            error: function() {
+                alert('La requête n\'a pas abouti'); }
+        });
+    </script>
+{% endblock %}

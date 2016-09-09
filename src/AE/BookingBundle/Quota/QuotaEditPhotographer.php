@@ -93,7 +93,6 @@ class QuotaEditPhotographer
             $daysList = [];
             //On affiche tous les jours de quotas
             foreach ($holidays as $h) {
-                //dump($h->getDateStart()); die();
                 foreach (new \DatePeriod($h->getDateStart(), \DateInterval::createFromDateString('1 day'), $h->getDateEnd()) as $dt) {
                     if (!$dt->format('w') == "0") {
                         $daysList[] = $dt->format('Y-m-d');

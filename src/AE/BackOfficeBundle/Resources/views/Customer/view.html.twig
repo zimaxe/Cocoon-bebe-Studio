@@ -1,0 +1,126 @@
+{% extends "@AEBackOffice/layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Réservation de {{ customer.firstName|capitalize }} {{ customer.name|upper }}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>
+                    <i class="fa fa-shopping-cart"></i>&nbsp; {{ 'Gestion des réservations'|upper }}
+                    <small>{{ customer.firstName|capitalize }} {{ customer.name|upper }} </small>
+                </h2>
+                <div class="panel-body clearfix">
+                    <a href="{{ path("ae_backoffice_customer_index") }}">
+                        <button class="btn btn-shadow btn-danger"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;RETOUR</button>
+                    </a>
+                    <a href="{{ path("ae_backoffice_customer_edit", {'id': customer.id}) }}">
+                        <button class="btn btn-shadow btn-success"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;EDITER</button>
+                    </a>
+                </div>
+            </header>
+
+        </section>
+
+        <section class="panel">
+            <header class="panel-heading summary-head">
+                <h4>Réservation effectuée le {{ customer.createdAt|date('d/m/Y') }} à {{ customer.createdAt|date('h:i:s') }}</h4>
+                <p></p>
+            </header>
+            <div class="panel-body">
+                <ul class="summary-list">
+                    <li>
+                        <a href="javascript:;">
+                            <i class=" fa fa-calendar-o text-info"></i>
+                            <h4 class="text-info">{{ 'Jour de prestation'|upper }}</h4>
+                            Le {{ customer.orderDate|localizeddate('full', 'none') }}
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-clock-o text-warning"></i>
+                            <h4 class="text-warning">{{ 'Créneau'|upper }}</h4>
+                            Entre 13h30 et 18h30
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="fa fa-hospital-o text-success"></i>
+                            <h4 class="text-success">{{ 'Maternité'|upper }}</h4>
+                            {{ customer.maternity.name }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class=" fa fa-truck text-primary"></i>
+                            <h4 class="text-primary">{{ 'Adresse du client'|upper }} </h4>
+                            {{ customer.address|capitalize }} {{ customer.zip }} {{ customer.city|capitalize }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <section>
+            <div class="state-baby">
+                <section class="panel panel-relative clearfix">
+                    <div class="table-cell">
+                        <div class="symbol purple">
+                            <i class="fa fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="value">
+                        <h4 class="purpleTitle">{{ 'La Maman'|upper }}</h4>
+                        <p>Nom : <strong>{{ customer.name|capitalize }}</strong></p>
+                        <p>Prénom : <strong>{{ customer.firstName|capitalize }}</strong></p>
+                        <p>Téléphone (Fixe) : <strong>{{ (customer.phone)? customer.phone : 'N/A' }}</strong></p>
+                        <p>Portable : <strong>{{ customer.mobileMother }}</strong></p>
+                        <p>Email : <strong><a href="mailto:{{ customer.emailMother }}">{{ customer.emailMother }}</a></strong></p>
+                    </div>
+                </section>
+            </div>
+            <div class="state-baby">
+                <section class="panel panel-relative clearfix">
+                    <div class="symbol blue">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="value">
+                        <h4 class="blueTitle">{{ 'Le Papa'|upper }}</h4>
+                        <p>Portable : <strong>{{ (customer.mobileFather)? customer.mobileFather : 'N/A' }}</strong></p>
+                        <p>Email : <strong>{% if not customer.emailFather %} N/A {% else %} <a href="mailto:{{ customer.emailFather }}">{{ customer.emailFather }}</a> {% endif %}</strong></p>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+    </div>
+    <aside class="profile-nav col-lg-6">
+
+        <div class="state-baby">
+            <section class="panel panel-relative clearfix">
+                <div class="table-cell">
+                    <div class="symbol red">
+                        <i class="fa fa-smile-o"></i>
+                    </div>
+                </div>
+                <div class="value">
+                    <h4>{{ 'Le bébé'|upper }}</h4>
+                    <p>Nom : <strong>{{ (customer.babyName)? customer.babyName|capitalize : 'N/A' }}</strong></p>
+                    <p>Prénom : <strong>{{ (customer.babyFirstName)? customer.babyFirstName|capitalize : 'N/A' }}</strong></p>
+                    <p>Date de naisssance: <strong>Le {{ (customer.dateBirth)? customer.dateBirth|localizeddate('full', 'none') : 'N/A' }}</strong> </p>
+                    <p>Sexe: <strong>{{ (customer.gender)? 'Garçon' : 'Fille' }}</strong></p>
+                    <p>poids : <strong>{{ (customer.weight)? customer.weight : 'N/A' }}</strong> Kg</p>
+                    <p>Taille : <strong>{{ (customer.height)? customer.height : 'N/A' }}</strong> cm</p>
+                </div>
+            </section>
+        </div>
+    </aside>
+</div>
+
+{% endblock %}

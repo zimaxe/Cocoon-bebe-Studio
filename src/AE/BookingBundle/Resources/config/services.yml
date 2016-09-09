@@ -4,6 +4,10 @@ services:
     class: AE\BookingBundle\Quota\QuotaCustomer
     arguments: ['%max_slot%','@doctrine.orm.entity_manager']
 
+  ae_booking.quota.quota_edit_customer:
+    class: AE\BookingBundle\Quota\QuotaEditCustomer
+    arguments: ['@doctrine.orm.entity_manager']
+
   ae_booking.quota.quota_holiday:
     class: AE\BookingBundle\Quota\QuotaHoliday
     arguments: ['%max_slot%', '@doctrine.orm.entity_manager']

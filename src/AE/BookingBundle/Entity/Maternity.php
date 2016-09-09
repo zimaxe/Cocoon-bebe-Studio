@@ -24,30 +24,9 @@ class Maternity
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true, nullable=false)
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=80, nullable=true)
-     */
-    private $address;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="zip", type="string", length=5, nullable=true)
-     */
-    private $zip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=50, nullable=true)
-     */
-    private $city;
 
     /**
      * @var bool
@@ -69,6 +48,7 @@ class Maternity
     public function __construct()
     {
         $this->customer = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
     }
 
 
@@ -107,78 +87,6 @@ class Maternity
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Maternity
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set zip
-     *
-     * @param string $zip
-     *
-     * @return Maternity
-     */
-    public function setZip($zip)
-    {
-        $this->zip = $zip;
-
-        return $this;
-    }
-
-    /**
-     * Get zip
-     *
-     * @return string
-     */
-    public function getZip()
-    {
-        return $this->zip;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return Maternity
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
      * Set isActive
      *
      * @param boolean $isActive
@@ -210,5 +118,29 @@ class Maternity
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * Add customer
+     *
+     * @param \AE\BookingBundle\Entity\Customer $customer
+     *
+     * @return Maternity
+     */
+    public function addCustomer(\AE\BookingBundle\Entity\Customer $customer)
+    {
+        $this->customer[] = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Remove customer
+     *
+     * @param \AE\BookingBundle\Entity\Customer $customer
+     */
+    public function removeCustomer(\AE\BookingBundle\Entity\Customer $customer)
+    {
+        $this->customer->removeElement($customer);
     }
 }

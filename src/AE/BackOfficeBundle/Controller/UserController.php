@@ -18,7 +18,7 @@ class UserController extends Controller
     public function loginAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('ae_backoffice_user_index');
+            return $this->redirectToRoute('ae_backoffice_customer_calendar');
         }
         $authenticationUtils = $this->get('security.authentication_utils');
 

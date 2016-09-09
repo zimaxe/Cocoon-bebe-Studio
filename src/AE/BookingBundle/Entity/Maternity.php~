@@ -29,27 +29,6 @@ class Maternity
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=80, nullable=true)
-     */
-    private $address;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="zip", type="string", length=5, nullable=true)
-     */
-    private $zip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=50, nullable=true)
-     */
-    private $city;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="isActive", type="boolean")
@@ -57,10 +36,20 @@ class Maternity
     private $isActive;
 
     /**
-     * @ORM\OneToMany(targetEntity="AE\BookingBundle\Entity\Customer", mappedBy="customer")
+     * @ORM\OneToMany(targetEntity="AE\BookingBundle\Entity\Customer", mappedBy="maternity")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customer;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->customer = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+    }
 
 
     /**
@@ -192,5 +181,14 @@ class Maternity
     {
         return $this->isActive;
     }
-}
 
+    /**
+     * Get customer
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+}

@@ -69,21 +69,17 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a href="">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
+                    <a href="{{ path("ae_backoffice_customer_calendar") }}">
+                        <i class="fa fa-calendar"></i>
+                        <span>Calendrier</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;"
+                    <a href="{{ path('ae_backoffice_customer_index') }}"
                        {% if app.request.attributes.get('_route') == 'ae_backoffice_customer_index' or app.request.attributes.get('_route') == 'ae_backoffice_customer_add' %} class="active" {% endif %} >
                         <i class="fa fa-shopping-cart"></i>
                         <span>Réservations</span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="{{ path('ae_backoffice_customer_index') }}">Liste des réservations</a></li>
-                        <li><a href="">Ajouter une réservation</a></li>
-                    </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;"
@@ -93,7 +89,7 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{ path('ae_backoffice_maternity_index') }}">Liste des maternités</a></li>
-                        <li><a href="">Ajouter une maternité</a></li>
+                        <li><a href="{{ path('ae_backoffice_maternity_add') }}">Ajouter une maternité</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">

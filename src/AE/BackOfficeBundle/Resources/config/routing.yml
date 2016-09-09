@@ -3,11 +3,58 @@ ae_backoffice_customer_index:
     path:     /reservations
     defaults: { _controller: AEBackOfficeBundle:Customer:index }
 
+ae_backoffice_customer_date:
+    path:     /reservations/filtre/{date}
+    defaults: { _controller: AEBackOfficeBundle:Customer:date}
+    requirements:
+      date:  "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
+ae_backoffice_customer_view:
+    path:     reservations/detail/{id}
+    defaults: { _controller: AEBackOfficeBundle:Customer:view }
+    requirements:
+          id: \d+
+
+ae_backoffice_customer_edit:
+    path:     reservations/editer/{id}
+    defaults: { _controller: AEBackOfficeBundle:Customer:edit }
+    requirements:
+          id: \d+
+
+ae_backoffice_customer_delete:
+    path:     reservations/supprimer/{id}
+    defaults: { _controller: AEBackOfficeBundle:Customer:delete }
+    requirements:
+          id: \d+
+
+ae_backoffice_customer_calendar:
+    path:     reservations/calendrier
+    defaults: { _controller: AEBackOfficeBundle:Customer:calendar }
+
+ae_backoffice_customer_ajax:
+    path:     /reservations/ajax
+    defaults: { _controller: AEBackOfficeBundle:Customer:ajaxCalendarEvents }
 
 ################### MATERNITY #######################################
 ae_backoffice_maternity_index:
     path:     /maternites
     defaults: { _controller: AEBackOfficeBundle:Maternity:index }
+
+ae_backoffice_maternity_add:
+    path:     /maternites/ajouter
+    defaults: { _controller: AEBackOfficeBundle:Maternity:add }
+
+ae_backoffice_maternity_edit:
+    path:     maternites/editer/{id}
+    defaults: { _controller: AEBackOfficeBundle:Maternity:edit }
+    requirements:
+          id: \d+
+
+ae_backoffice_maternity_delete:
+    path:     maternites/supprimer/{id}
+    defaults: { _controller: AEBackOfficeBundle:Maternity:delete }
+    requirements:
+          id: \d+
 
 ################### USER #######################################
 ae_backoffice_user_index:
@@ -55,20 +102,10 @@ ae_backoffice_holiday_ajax:
     requirements:
         userId: \d+
 
-ae_backoffice_holiday_edit:
-    path:     /holidays/edit/{id}
-    defaults: { _controller: AEBackOfficeBundle:Holiday:edit }
-    requirements:
-      userId: \d+
-
 ae_backoffice_holiday_delete:
     path:     /holidays/delete/{id}
     defaults: { _controller: AEBackOfficeBundle:Holiday:delete }
     requirements:
       userId: \d+
-
-ae_backoffice_grid:
-    path: /holidays/grid
-    defaults: { _controller: AEBackOfficeBundle:Holiday:grid }
 
 

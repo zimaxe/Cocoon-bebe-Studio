@@ -2,6 +2,7 @@
 
 namespace AE\BookingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -158,6 +159,7 @@ class Customer
     /**
      * @ORM\ManyToOne(targetEntity="AE\BookingBundle\Entity\Maternity", inversedBy="customer")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $maternity;
     
@@ -168,7 +170,7 @@ class Customer
     {
         $this->validate = 1;
         $this->createdAt = new \DateTime();
-
+        $this->maternity = new ArrayCollection();
     }
 
 
